@@ -1,5 +1,6 @@
 package com.drongox.yatzy;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -88,16 +89,29 @@ public class Yatzy
   }
 
 
+  private static Map<Integer, Long> countDice(int... dice)
+  {
+    return IntStream.of(dice)
+                    .boxed()
+                    .collect(groupingBy(identity(), counting()));
+  }
+
+
   public static int score_pair(int d1, int d2, int d3, int d4, int d5)
   {
-    Map<Integer, Long> counts = Stream.of(d1, d2, d3, d4, d5)
-                                      .collect(groupingBy(identity(), counting()));
+    Map<Integer, Long> counts = countDice(d1, d2, d3, d4, d5);
+    return scoreSomeOfAKindStrategy(2, counts);
+  }
+
+
+  private static int scoreSomeOfAKindStrategy(int matchingCount, Map<Integer, Long> counts)
+  {
     return counts.entrySet()
                  .stream()
-                 .filter(entry -> entry.getValue() >= 2)
+                 .filter(entry -> entry.getValue() >= matchingCount)
                  .max(comparingByKey())
                  .map(Map.Entry::getKey)
-                 .map(die -> die * 2)
+                 .map(die -> die * matchingCount)
                  .orElse(0);
   }
 
@@ -124,35 +138,15 @@ public class Yatzy
   }
 
 
-  public static int four_of_a_kind(int _1, int _2, int d3, int d4, int d5)
+  public static int four_of_a_kind(int d1, int d2, int d3, int d4, int d5)
   {
-    int[] tallies;
-    tallies = new int[6];
-    tallies[_1 - 1]++;
-    tallies[_2 - 1]++;
-    tallies[d3 - 1]++;
-    tallies[d4 - 1]++;
-    tallies[d5 - 1]++;
-    for (int i = 0; i < 6; i++)
-      if (tallies[i] >= 4)
-        return (i + 1) * 4;
-    return 0;
+    return scoreSomeOfAKindStrategy(4, countDice(d1, d2, d3, d4, d5));
   }
 
 
   public static int three_of_a_kind(int d1, int d2, int d3, int d4, int d5)
   {
-    int[] t;
-    t = new int[6];
-    t[d1 - 1]++;
-    t[d2 - 1]++;
-    t[d3 - 1]++;
-    t[d4 - 1]++;
-    t[d5 - 1]++;
-    for (int i = 0; i < 6; i++)
-      if (t[i] >= 3)
-        return (i + 1) * 3;
-    return 0;
+    return scoreSomeOfAKindStrategy(3, countDice(d1, d2, d3, d4, d5));
   }
 
 
