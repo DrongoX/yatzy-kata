@@ -10,7 +10,6 @@ import static java.util.stream.Collectors.*;
 
 public class Yatzy
 {
-
   public static int chance(int d1, int d2, int d3, int d4, int d5)
   {
     return IntStream.of(d1, d2, d3, d4, d5).sum();
@@ -26,14 +25,6 @@ public class Yatzy
       return 50;
     else
       return 0;
-  }
-
-
-  private static int exactNumberStrategy(int matchingNumber, int... dice)
-  {
-    return IntStream.of(dice)
-                    .filter(die -> die == matchingNumber)
-                    .sum();
   }
 
 
@@ -58,14 +49,9 @@ public class Yatzy
   protected int[] dice;
 
 
-  public Yatzy(int d1, int d2, int d3, int d4, int _5)
+  public Yatzy(int d1, int d2, int d3, int d4, int d5)
   {
-    dice = new int[5];
-    dice[0] = d1;
-    dice[1] = d2;
-    dice[2] = d3;
-    dice[3] = d4;
-    dice[4] = _5;
+    dice = new int[]{d1, d2, d3, d4, d5};
   }
 
 
@@ -87,36 +73,16 @@ public class Yatzy
   }
 
 
-  private static Map<Integer, Long> countDice(int... dice)
-  {
-    return IntStream.of(dice)
-                    .boxed()
-                    .collect(groupingBy(identity(), counting()));
-  }
-
-
   public static int score_pair(int d1, int d2, int d3, int d4, int d5)
   {
-    Map<Integer, Long> counts = countDice(d1, d2, d3, d4, d5);
+    var counts = countDice(d1, d2, d3, d4, d5);
     return scoreSomeOfAKindStrategy(2, counts);
-  }
-
-
-  private static int scoreSomeOfAKindStrategy(int matchingCount, Map<Integer, Long> counts)
-  {
-    return counts.entrySet()
-                 .stream()
-                 .filter(entry -> entry.getValue() >= matchingCount)
-                 .max(comparingByKey())
-                 .map(Map.Entry::getKey)
-                 .map(die -> die * matchingCount)
-                 .orElse(0);
   }
 
 
   public static int two_pair(int d1, int d2, int d3, int d4, int d5)
   {
-    Map<Integer, Long> pairsOrMore = getPairsOrMore(d1, d2, d3, d4, d5);
+    var pairsOrMore = getPairsOrMore(d1, d2, d3, d4, d5);
 
     if (pairsOrMore.size() != 2)
       return 0;
@@ -142,15 +108,57 @@ public class Yatzy
 
   public static int smallStraight(int d1, int d2, int d3, int d4, int d5)
   {
-    Set<Integer> smallStraight = Set.of(1, 2, 3, 4, 5);
+    var smallStraight = Set.of(1, 2, 3, 4, 5);
     return exactRollStrategy(smallStraight, d1, d2, d3, d4, d5);
   }
 
 
   public static int largeStraight(int d1, int d2, int d3, int d4, int d5)
   {
-    Set<Integer> largeStraight = Set.of(2, 3, 4, 5, 6);
+    var largeStraight = Set.of(2, 3, 4, 5, 6);
     return exactRollStrategy(largeStraight, d1, d2, d3, d4, d5);
+  }
+
+
+  public static int fullHouse(int d1, int d2, int d3, int d4, int d5)
+  {
+    var pairsOrMore = getPairsOrMore(d1, d2, d3, d4, d5);
+
+    if (pairsOrMore.size() != 2)
+      return 0;
+    else
+      return pairsOrMore.entrySet()
+                        .stream()
+                        .mapToInt(entry -> entry.getKey() * entry.getValue().intValue())
+                        .sum();
+  }
+
+
+  private static int exactNumberStrategy(int matchingNumber, int... dice)
+  {
+    return IntStream.of(dice)
+                    .filter(die -> die == matchingNumber)
+                    .sum();
+  }
+
+
+  private static Map<Integer, Long> countDice(int... dice)
+  {
+    return IntStream.of(dice)
+                    .boxed()
+                    .collect(groupingBy(identity(), counting()));
+  }
+
+
+  private static int scoreSomeOfAKindStrategy(int matchingCount, Map<Integer, Long> counts)
+  {
+    return counts.entrySet()
+                 .stream()
+                 .filter(entry -> entry.getValue() >= matchingCount)
+                 .max(comparingByKey())
+                 .map(Map.Entry::getKey)
+                 .map(die -> die * matchingCount)
+                 .orElse(0);
   }
 
 
@@ -165,20 +173,6 @@ public class Yatzy
     } else {
       return 0;
     }
-  }
-
-
-  public static int fullHouse(int d1, int d2, int d3, int d4, int d5)
-  {
-    Map<Integer, Long> pairsOrMore = getPairsOrMore(d1, d2, d3, d4, d5);
-
-    if (pairsOrMore.size() != 2)
-      return 0;
-    else
-      return pairsOrMore.entrySet()
-                        .stream()
-                        .mapToInt(entry -> entry.getKey() * entry.getValue().intValue())
-                        .sum();
   }
 
 
