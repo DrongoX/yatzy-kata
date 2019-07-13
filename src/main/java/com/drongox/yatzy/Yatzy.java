@@ -119,17 +119,13 @@ public class Yatzy
 
   public static int two_pair(int d1, int d2, int d3, int d4, int d5)
   {
-    Map<Integer, Long> counts = countDice(d1, d2, d3, d4, d5);
+    Map<Integer, Long> pairsOrMore = getPairsOrMore(d1, d2, d3, d4, d5);
 
-    Set<Integer> pairsOrMore = counts.entrySet()
-                                     .stream()
-                                     .filter(entry -> entry.getValue() >= 2)
-                                     .map(Map.Entry::getKey)
-                                     .collect(toSet());
     if (pairsOrMore.size() != 2)
       return 0;
     else
-      return pairsOrMore.stream()
+      return pairsOrMore.keySet()
+                        .stream()
                         .mapToInt(die -> die * 2)
                         .sum();
   }
@@ -187,35 +183,23 @@ public class Yatzy
 
   public static int fullHouse(int d1, int d2, int d3, int d4, int d5)
   {
-    int[] tallies;
-    boolean _2 = false;
-    int i;
-    int _2_at = 0;
-    boolean _3 = false;
-    int _3_at = 0;
+    Map<Integer, Long> pairsOrMore = getPairsOrMore(d1, d2, d3, d4, d5);
 
-    tallies = new int[6];
-    tallies[d1 - 1] += 1;
-    tallies[d2 - 1] += 1;
-    tallies[d3 - 1] += 1;
-    tallies[d4 - 1] += 1;
-    tallies[d5 - 1] += 1;
-
-    for (i = 0; i != 6; i += 1)
-      if (tallies[i] == 2) {
-        _2 = true;
-        _2_at = i + 1;
-      }
-
-    for (i = 0; i != 6; i += 1)
-      if (tallies[i] == 3) {
-        _3 = true;
-        _3_at = i + 1;
-      }
-
-    if (_2 && _3)
-      return _2_at * 2 + _3_at * 3;
-    else
+    if (pairsOrMore.size() != 2)
       return 0;
+    else
+      return pairsOrMore.entrySet()
+                        .stream()
+                        .mapToInt(entry -> entry.getKey() * entry.getValue().intValue())
+                        .sum();
+  }
+
+
+  private static Map<Integer, Long> getPairsOrMore(int... dice)
+  {
+    return countDice(dice).entrySet()
+                          .stream()
+                          .filter(entry -> entry.getValue() >= 2)
+                          .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
 }
