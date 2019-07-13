@@ -5,11 +5,8 @@ import org.junit.*;
 import static com.drongox.yatzy.YatzyStrategy.*;
 import static org.junit.Assert.*;
 
-public class YatzyTest
+public class YatzyStrategyTest
 {
-  private final Yatzy yatzy = new Yatzy();
-
-
   @Test
   public void should_return_15_when_strategy_chance_and_roll_2_3_4_5_1()
   {
@@ -17,7 +14,7 @@ public class YatzyTest
     Roll roll = new Roll(2, 3, 4, 5, 1);
     int expected = 15;
     //when
-    int actual = yatzy.score(CHANCE, roll);
+    int actual = CHANCE.scoreRoll(roll);
     //then
     assertEquals(expected, actual);
   }
@@ -30,7 +27,7 @@ public class YatzyTest
     Roll roll = new Roll(4, 4, 4, 4, 4);
     int expected = 50;
     //when
-    int actual = yatzy.score(YATZY, roll);
+    int actual = YATZY.scoreRoll(roll);
     //then
     assertEquals(expected, actual);
   }
@@ -43,7 +40,7 @@ public class YatzyTest
     Roll roll = new Roll(4, 4, 4, 4, 1);
     int expected = 0;
     //when
-    int actual = yatzy.score(YATZY, roll);
+    int actual = YATZY.scoreRoll(roll);
     //then
     assertEquals(expected, actual);
   }
@@ -56,7 +53,7 @@ public class YatzyTest
     Roll roll = new Roll(1, 2, 1, 4, 5);
     int expected = 2;
     //when
-    int actual = yatzy.score(ONES, roll);
+    int actual = ONES.scoreRoll(roll);
     //then
     assertEquals(expected, actual);
   }
@@ -69,7 +66,7 @@ public class YatzyTest
     Roll roll = new Roll(1, 2, 3, 2, 6);
     int expected = 4;
     //when
-    int actual = yatzy.score(TWOS, roll);
+    int actual = TWOS.scoreRoll(roll);
     //then
     assertEquals(expected, actual);
   }
@@ -82,7 +79,7 @@ public class YatzyTest
     Roll roll = new Roll(1, 2, 3, 2, 3);
     int expected = 6;
     //when
-    int actual = yatzy.score(THREES, roll);
+    int actual = THREES.scoreRoll(roll);
     //then
     assertEquals(expected, actual);
   }
@@ -95,7 +92,7 @@ public class YatzyTest
     Roll roll = new Roll(4, 4, 5, 5, 5);
     int expected = 8;
     //when
-    int actual = yatzy.score(FOURS, roll);
+    int actual = FOURS.scoreRoll(roll);
     //then
     assertEquals(expected, actual);
   }
@@ -108,7 +105,7 @@ public class YatzyTest
     Roll roll = new Roll(4, 4, 5, 5, 5);
     int expected = 15;
     //when
-    int actual = yatzy.score(FIVES, roll);
+    int actual = FIVES.scoreRoll(roll);
     //then
     assertEquals(expected, actual);
   }
@@ -121,7 +118,7 @@ public class YatzyTest
     Roll roll = new Roll(6, 5, 6, 6, 5);
     int expected = 18;
     //when
-    int actual = yatzy.score(SIXES, roll);
+    int actual = SIXES.scoreRoll(roll);
     //then
     assertEquals(expected, actual);
   }
@@ -134,7 +131,7 @@ public class YatzyTest
     Roll roll = new Roll(5, 3, 6, 6, 5);
     int expected = 12;
     //when
-    int actual = yatzy.score(PAIR, roll);
+    int actual = PAIR.scoreRoll(roll);
     //then
     assertEquals(expected, actual);
   }
@@ -147,7 +144,7 @@ public class YatzyTest
     Roll roll = new Roll(1, 2, 3, 6, 5);
     int expected = 0;
     //when
-    int actual = yatzy.score(PAIR, roll);
+    int actual = PAIR.scoreRoll(roll);
     //then
     assertEquals(expected, actual);
   }
@@ -160,7 +157,7 @@ public class YatzyTest
     Roll roll = new Roll(3, 3, 5, 5, 5);
     int expected = 16;
     //when
-    int actual = yatzy.score(TWO_PAIRS, roll);
+    int actual = TWO_PAIRS.scoreRoll(roll);
     //then
     assertEquals(expected, actual);
   }
@@ -173,7 +170,7 @@ public class YatzyTest
     Roll roll = new Roll(3, 3, 4, 5, 6);
     int expected = 0;
     //when
-    int actual = yatzy.score(TWO_PAIRS, roll);
+    int actual = TWO_PAIRS.scoreRoll(roll);
     //then
     assertEquals(expected, actual);
   }
@@ -186,7 +183,7 @@ public class YatzyTest
     Roll roll = new Roll(3, 3, 3, 3, 5);
     int expected = 9;
     //when
-    int actual = yatzy.score(THREE_OF_A_KIND, roll);
+    int actual = THREE_OF_A_KIND.scoreRoll(roll);
     //then
     assertEquals(expected, actual);
   }
@@ -199,7 +196,7 @@ public class YatzyTest
     Roll roll = new Roll(3, 3, 4, 4, 5);
     int expected = 0;
     //when
-    int actual = yatzy.score(THREE_OF_A_KIND, roll);
+    int actual = THREE_OF_A_KIND.scoreRoll(roll);
     //then
     assertEquals(expected, actual);
   }
@@ -212,7 +209,7 @@ public class YatzyTest
     Roll roll = new Roll(3, 3, 3, 3, 3);
     int expected = 12;
     //when
-    int actual = yatzy.score(FOUR_OF_A_KIND, roll);
+    int actual = FOUR_OF_A_KIND.scoreRoll(roll);
     //then
     assertEquals(expected, actual);
   }
@@ -225,7 +222,7 @@ public class YatzyTest
     Roll roll = new Roll(3, 3, 3, 5, 5);
     int expected = 0;
     //when
-    int actual = yatzy.score(FOUR_OF_A_KIND, roll);
+    int actual = FOUR_OF_A_KIND.scoreRoll(roll);
     //then
     assertEquals(expected, actual);
   }
@@ -238,7 +235,7 @@ public class YatzyTest
     Roll roll = new Roll(3, 2, 1, 4, 5);
     int expected = 15;
     //when
-    int actual = yatzy.score(SMALL_STRAIGHT, roll);
+    int actual = SMALL_STRAIGHT.scoreRoll(roll);
     //then
     assertEquals(expected, actual);
   }
@@ -251,7 +248,7 @@ public class YatzyTest
     Roll roll = new Roll(5, 2, 3, 4, 5);
     int expected = 0;
     //when
-    int actual = yatzy.score(SMALL_STRAIGHT, roll);
+    int actual = SMALL_STRAIGHT.scoreRoll(roll);
     //then
     assertEquals(expected, actual);
   }
@@ -264,7 +261,7 @@ public class YatzyTest
     Roll roll = new Roll(6, 2, 3, 4, 5);
     int expected = 20;
     //when
-    int actual = yatzy.score(LARGE_STRAIGHT, roll);
+    int actual = LARGE_STRAIGHT.scoreRoll(roll);
     //then
     assertEquals(expected, actual);
   }
@@ -277,7 +274,7 @@ public class YatzyTest
     Roll roll = new Roll(1, 2, 3, 4, 5);
     int expected = 0;
     //when
-    int actual = yatzy.score(LARGE_STRAIGHT, roll);
+    int actual = LARGE_STRAIGHT.scoreRoll(roll);
     //then
     assertEquals(expected, actual);
   }
@@ -290,7 +287,7 @@ public class YatzyTest
     Roll roll = new Roll(6, 2, 2, 2, 6);
     int expected = 18;
     //when
-    int actual = yatzy.score(FULL_HOUSE, roll);
+    int actual = FULL_HOUSE.scoreRoll(roll);
     //then
     assertEquals(expected, actual);
   }
@@ -303,7 +300,7 @@ public class YatzyTest
     Roll roll = new Roll(6, 2, 2, 2, 2);
     int expected = 0;
     //when
-    int actual = yatzy.score(FULL_HOUSE, roll);
+    int actual = FULL_HOUSE.scoreRoll(roll);
     //then
     assertEquals(expected, actual);
   }
