@@ -117,11 +117,12 @@ public class YatzyTest
   @Test
   public void should_return_18_when_strategy_sixes_and_roll_6_5_6_6_5()
   {
+    //given
+    Roll roll = new Roll(6, 5, 6, 6, 5);
     int expected = 18;
-    Yatzy yatzy = new Yatzy(6, 5, 6, 6, 5);
-
-    int actual = yatzy.sixes();
-
+    //when
+    int actual = yatzy.score(SIXES, roll);
+    //then
     assertEquals(expected, actual);
   }
 
