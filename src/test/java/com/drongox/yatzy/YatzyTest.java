@@ -2,8 +2,7 @@ package com.drongox.yatzy;
 
 import org.junit.*;
 
-import static com.drongox.yatzy.YatzyStrategy.CHANCE;
-import static com.drongox.yatzy.YatzyStrategy.YATZY;
+import static com.drongox.yatzy.YatzyStrategy.*;
 import static org.junit.Assert.*;
 
 public class YatzyTest
@@ -53,8 +52,12 @@ public class YatzyTest
   @Test
   public void should_return_2_when_strategy_ones_and_roll_1_2_1_4_5()
   {
+    //given
+    Roll roll = new Roll(1, 2, 1, 4, 5);
     int expected = 2;
-    int actual = Yatzy.ones(1, 2, 1, 4, 5);
+    //when
+    int actual = yatzy.score(ONES, roll);
+    //then
     assertEquals(expected, actual);
   }
 
