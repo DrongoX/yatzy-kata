@@ -19,18 +19,6 @@ public class Yatzy
   }
 
 
-  public static int yatzy(int... dice)
-  {
-    long distinctDicesCount = IntStream.of(dice)
-                                       .distinct()
-                                       .count();
-    if (distinctDicesCount == 1)
-      return 50;
-    else
-      return 0;
-  }
-
-
   public static int ones(int d1, int d2, int d3, int d4, int d5)
   {
     return exactNumberStrategy(1, d1, d2, d3, d4, d5);

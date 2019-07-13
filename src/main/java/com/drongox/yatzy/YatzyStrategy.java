@@ -4,7 +4,9 @@ import java.util.function.Function;
 
 public enum YatzyStrategy
 {
-  CHANCE(roll -> roll.stream().sum());
+  CHANCE(roll -> roll.stream().sum()),
+
+  YATZY(roll -> roll.stream().distinct().count() == 1 ? 50 : 0);
 
 
   private final Function<Roll, Integer> rollCalculator;
