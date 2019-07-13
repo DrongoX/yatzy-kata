@@ -14,7 +14,9 @@ public enum YatzyStrategy
 
   THREES(roll -> exactNumberStrategy(3, roll)),
 
-  FOURS(roll -> exactNumberStrategy(4, roll));
+  FOURS(roll -> exactNumberStrategy(4, roll)),
+
+  FIVES(roll -> exactNumberStrategy(5, roll));
 
 
   private final Function<Roll, Integer> scoreCalculator;
