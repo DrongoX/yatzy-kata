@@ -2,7 +2,7 @@ package com.drongox.yatzy;
 
 import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.IntStream;
+import java.util.function.ToIntFunction;
 
 import static java.util.Map.Entry.comparingByKey;
 import static java.util.function.Function.identity;
@@ -36,9 +36,9 @@ public enum YatzyStrategy
 
   LARGE_STRAIGHT(roll -> exactRollStrategy(new Roll(2, 3, 4, 5, 6), roll)),
 
-  FULL_HOUSE(YatzyStrategy::fullHouseStrategy);
+  FULL_HOUSE(YatzyStrategy::fullHouseStrategy),
 
-
+  TWO_PAIRS(YatzyStrategy::twoPairsStrategy);
 
 
   private final Function<Roll, Integer> scoreCalculator;
@@ -94,25 +94,32 @@ public enum YatzyStrategy
   }
 
 
-  private static Integer fullHouseStrategy(Roll roll)
+  private static Integer twoPairsStrategy(Roll roll)
   {
-    var pairsOrMore = getPairsOrMore(roll);
-
-    if (pairsOrMore.size() != 2)
-      return 0;
-    else
-      return pairsOrMore.entrySet()
-                        .stream()
-                        .mapToInt(entry -> entry.getKey() * entry.getValue().intValue())
-                        .sum();
+    return severalPairsOrMore(roll, entry -> entry.getKey() * 2);
   }
 
 
-  private static Map<Integer, Long> getPairsOrMore(Roll roll)
+  private static Integer fullHouseStrategy(Roll roll)
   {
-    return countDice(roll).entrySet()
-                          .stream()
-                          .filter(entry -> entry.getValue() >= 2)
-                          .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
+    return severalPairsOrMore(roll, entry -> entry.getKey() * entry.getValue().intValue());
+  }
+
+
+  private static Integer severalPairsOrMore(Roll roll, ToIntFunction<Map.Entry<Integer, Long>> scoreCalculator)
+  {
+    var pairsOrMore = countDice(roll).entrySet()
+                                     .stream()
+                                     .filter(entry -> entry.getValue() >= 2)
+                                     .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+    if (pairsOrMore.size() != 2)
+      return 0;
+    else {
+      return pairsOrMore.entrySet()
+                        .stream()
+                        .mapToInt(scoreCalculator)
+                        .sum();
+    }
   }
 }

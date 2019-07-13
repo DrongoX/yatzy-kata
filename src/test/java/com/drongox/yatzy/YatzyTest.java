@@ -156,8 +156,12 @@ public class YatzyTest
   @Test
   public void should_return_16_when_strategy_two_pairs_and_roll_3_3_5_5_5()
   {
+    //given
+    Roll roll = new Roll(3, 3, 5, 5, 5);
     int expected = 16;
-    int actual = Yatzy.two_pair(3, 3, 5, 5, 5);
+    //when
+    int actual = yatzy.score(TWO_PAIRS, roll);
+    //then
     assertEquals(expected, actual);
   }
 
@@ -165,8 +169,12 @@ public class YatzyTest
   @Test
   public void should_return_0_when_strategy_two_pairs_and_roll_3_3_4_5_6()
   {
+    //given
+    Roll roll = new Roll(3, 3, 4, 5, 6);
     int expected = 0;
-    int actual = Yatzy.two_pair(3, 3, 4, 5, 6);
+    //when
+    int actual = yatzy.score(TWO_PAIRS, roll);
+    //then
     assertEquals(expected, actual);
   }
 
