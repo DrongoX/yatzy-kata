@@ -65,8 +65,12 @@ public class YatzyTest
   @Test
   public void should_return_4_when_strategy_twos_and_roll_1_2_3_2_6()
   {
+    //given
+    Roll roll = new Roll(1, 2, 3, 2, 6);
     int expected = 4;
-    int actual = Yatzy.twos(1, 2, 3, 2, 6);
+    //when
+    int actual = yatzy.score(TWOS, roll);
+    //then
     assertEquals(expected, actual);
   }
 

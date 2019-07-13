@@ -8,21 +8,23 @@ public enum YatzyStrategy
 
   YATZY(roll -> roll.stream().distinct().count() == 1 ? 50 : 0),
 
-  ONES(roll -> exactNumberStrategy(1, roll));
+  ONES(roll -> exactNumberStrategy(1, roll)),
+
+  TWOS(roll -> exactNumberStrategy(2, roll));
 
 
-  private final Function<Roll, Integer> rollCalculator;
+  private final Function<Roll, Integer> scoreCalculator;
 
 
-  YatzyStrategy(Function<Roll, Integer> rollCalculator)
+  YatzyStrategy(Function<Roll, Integer> scoreCalculator)
   {
-    this.rollCalculator = rollCalculator;
+    this.scoreCalculator = scoreCalculator;
   }
 
 
   public int scoreRoll(Roll roll)
   {
-    return rollCalculator.apply(roll);
+    return scoreCalculator.apply(roll);
   }
 
 
