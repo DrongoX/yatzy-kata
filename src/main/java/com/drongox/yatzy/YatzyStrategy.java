@@ -2,7 +2,6 @@ package com.drongox.yatzy;
 
 import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.IntStream;
 
 import static java.util.Map.Entry.comparingByKey;
 import static java.util.function.Function.identity;
@@ -27,9 +26,11 @@ public enum YatzyStrategy
 
   SIXES(roll -> exactNumberStrategy(6, roll)),
 
-  PAIR(roll -> scoreSomeOfAKindStrategy(2, roll)),
+  PAIR(roll -> someOfAKindStrategy(2, roll)),
 
-  THREE_OF_A_KIND(roll -> scoreSomeOfAKindStrategy(3, roll));
+  THREE_OF_A_KIND(roll -> someOfAKindStrategy(3, roll)),
+
+  FOUR_OF_A_KIND(roll -> someOfAKindStrategy(4, roll));
 
 
   private final Function<Roll, Integer> scoreCalculator;
@@ -63,7 +64,7 @@ public enum YatzyStrategy
   }
 
 
-  private static Integer scoreSomeOfAKindStrategy(int matchingCount, Roll roll)
+  private static Integer someOfAKindStrategy(int matchingCount, Roll roll)
   {
     return countDice(roll).entrySet()
                           .stream()
