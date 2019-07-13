@@ -1,14 +1,15 @@
 package com.drongox.yatzy;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.util.Map.Entry.comparingByKey;
 import static java.util.function.Function.identity;
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.*;
 
 public class Yatzy
 {
@@ -118,23 +119,19 @@ public class Yatzy
 
   public static int two_pair(int d1, int d2, int d3, int d4, int d5)
   {
-    int[] counts = new int[6];
-    counts[d1 - 1]++;
-    counts[d2 - 1]++;
-    counts[d3 - 1]++;
-    counts[d4 - 1]++;
-    counts[d5 - 1]++;
-    int n = 0;
-    int score = 0;
-    for (int i = 0; i < 6; i += 1)
-      if (counts[6 - i - 1] >= 2) {
-        n++;
-        score += (6 - i);
-      }
-    if (n == 2)
-      return score * 2;
-    else
+    Map<Integer, Long> counts = countDice(d1, d2, d3, d4, d5);
+
+    Set<Integer> pairsOrMore = counts.entrySet()
+                                     .stream()
+                                     .filter(entry -> entry.getValue() >= 2)
+                                     .map(Map.Entry::getKey)
+                                     .collect(toSet());
+    if (pairsOrMore.size() != 2)
       return 0;
+    else
+      return pairsOrMore.stream()
+                        .mapToInt(die -> die * 2)
+                        .sum();
   }
 
 
