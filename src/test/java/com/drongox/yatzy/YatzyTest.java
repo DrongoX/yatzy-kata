@@ -224,10 +224,14 @@ public class YatzyTest
 
 
   @Test
-  public void should_return_15_when_strategy_small_straight_and_roll_1_2_3_4_5()
+  public void should_return_15_when_strategy_small_straight_and_roll_3_2_1_4_5()
   {
+    //given
+    Roll roll = new Roll(3, 2, 1, 4, 5);
     int expected = 15;
-    int actual = Yatzy.smallStraight(1, 2, 3, 4, 5);
+    //when
+    int actual = yatzy.score(SMALL_STRAIGHT, roll);
+    //then
     assertEquals(expected, actual);
   }
 
@@ -235,8 +239,12 @@ public class YatzyTest
   @Test
   public void should_return_0_when_strategy_small_straight_and_roll_5_2_3_4_5()
   {
+    //given
+    Roll roll = new Roll(5, 2, 3, 4, 5);
     int expected = 0;
-    int actual = Yatzy.smallStraight(5, 2, 3, 4, 5);
+    //when
+    int actual = yatzy.score(SMALL_STRAIGHT, roll);
+    //then
     assertEquals(expected, actual);
   }
 

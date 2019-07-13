@@ -30,13 +30,6 @@ public class Yatzy
   }
 
 
-  public static int smallStraight(int d1, int d2, int d3, int d4, int d5)
-  {
-    var smallStraight = Set.of(1, 2, 3, 4, 5);
-    return exactRollStrategy(smallStraight, d1, d2, d3, d4, d5);
-  }
-
-
   public static int largeStraight(int d1, int d2, int d3, int d4, int d5)
   {
     var largeStraight = Set.of(2, 3, 4, 5, 6);

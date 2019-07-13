@@ -30,7 +30,9 @@ public enum YatzyStrategy
 
   THREE_OF_A_KIND(roll -> someOfAKindStrategy(3, roll)),
 
-  FOUR_OF_A_KIND(roll -> someOfAKindStrategy(4, roll));
+  FOUR_OF_A_KIND(roll -> someOfAKindStrategy(4, roll)),
+
+  SMALL_STRAIGHT(roll -> exactRollStrategy(new Roll(1, 2, 3, 4, 5), roll));
 
 
   private final Function<Roll, Integer> scoreCalculator;
@@ -73,5 +75,15 @@ public enum YatzyStrategy
                           .map(Map.Entry::getKey)
                           .map(die -> die * matchingCount)
                           .orElse(0);
+  }
+
+
+  private static Integer exactRollStrategy(Roll expectedRoll, Roll actualRoll)
+  {
+    if (actualRoll.equals(expectedRoll)) {
+      return expectedRoll.stream().sum();
+    } else {
+      return 0;
+    }
   }
 }
