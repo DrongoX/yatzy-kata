@@ -174,8 +174,12 @@ public class YatzyTest
   @Test
   public void should_return_9_when_strategy_three_of_a_kind_and_roll_3_3_3_3_5()
   {
+    //given
+    Roll roll = new Roll(3, 3, 3, 3, 5);
     int expected = 9;
-    int actual = Yatzy.three_of_a_kind(3, 3, 3, 3, 5);
+    //when
+    int actual = yatzy.score(THREE_OF_A_KIND, roll);
+    //then
     assertEquals(expected, actual);
   }
 
@@ -183,8 +187,12 @@ public class YatzyTest
   @Test
   public void should_return_0_when_strategy_three_of_a_kind_and_roll_3_3_4_4_5()
   {
+    //given
+    Roll roll = new Roll(3, 3, 4, 4, 5);
     int expected = 0;
-    int actual = Yatzy.three_of_a_kind(3, 3, 4, 4, 5);
+    //when
+    int actual = yatzy.score(THREE_OF_A_KIND, roll);
+    //then
     assertEquals(expected, actual);
   }
 

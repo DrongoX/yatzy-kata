@@ -27,7 +27,9 @@ public enum YatzyStrategy
 
   SIXES(roll -> exactNumberStrategy(6, roll)),
 
-  PAIR(roll -> scoreSomeOfAKindStrategy(2, roll));
+  PAIR(roll -> scoreSomeOfAKindStrategy(2, roll)),
+
+  THREE_OF_A_KIND(roll -> scoreSomeOfAKindStrategy(3, roll));
 
 
   private final Function<Roll, Integer> scoreCalculator;
