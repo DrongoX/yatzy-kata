@@ -252,8 +252,12 @@ public class YatzyTest
   @Test
   public void should_return_20_when_strategy_large_straight_and_roll_6_2_3_4_5()
   {
+    //given
+    Roll roll = new Roll(6, 2, 3, 4, 5);
     int expected = 20;
-    int actual = Yatzy.largeStraight(6, 2, 3, 4, 5);
+    //when
+    int actual = yatzy.score(LARGE_STRAIGHT, roll);
+    //then
     assertEquals(expected, actual);
   }
 
@@ -261,8 +265,12 @@ public class YatzyTest
   @Test
   public void should_return_0_when_strategy_large_straight_and_roll_1_2_3_4_5()
   {
+    //given
+    Roll roll = new Roll(1, 2, 3, 4, 5);
     int expected = 0;
-    int actual = Yatzy.largeStraight(1, 2, 3, 4, 5);
+    //when
+    int actual = yatzy.score(LARGE_STRAIGHT, roll);
+    //then
     assertEquals(expected, actual);
   }
 
@@ -270,8 +278,12 @@ public class YatzyTest
   @Test
   public void should_return_18_when_strategy_full_house_and_roll_6_2_2_2_6()
   {
+    //given
+    Roll roll = new Roll(6, 2, 2, 2, 6);
     int expected = 18;
-    int actual = Yatzy.fullHouse(6, 2, 2, 2, 6);
+    //when
+    int actual = yatzy.score(FULL_HOUSE, roll);
+    //then
     assertEquals(expected, actual);
   }
 
@@ -279,8 +291,12 @@ public class YatzyTest
   @Test
   public void should_return_0_when_strategy_full_house_and_roll_6_2_2_2_2()
   {
+    //given
+    Roll roll = new Roll(6, 2, 2, 2, 2);
     int expected = 0;
-    int actual = Yatzy.fullHouse(6, 2, 2, 2, 2);
+    //when
+    int actual = yatzy.score(FULL_HOUSE, roll);
+    //then
     assertEquals(expected, actual);
   }
 }
