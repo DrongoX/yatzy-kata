@@ -23,36 +23,29 @@ public class Yatzy
   }
 
 
+  private static int exactNumberStrategy(int matchingNumber, int... dice)
+  {
+    return IntStream.of(dice)
+                    .filter(die -> die == matchingNumber)
+                    .sum();
+  }
+
+
   public static int ones(int d1, int d2, int d3, int d4, int d5)
   {
-    return IntStream.of(d1, d2, d3, d4, d5)
-        .filter(dice -> dice == 1)
-        .sum();
+    return exactNumberStrategy(1, d1, d2, d3, d4, d5);
   }
 
 
   public static int twos(int d1, int d2, int d3, int d4, int d5)
   {
-    int sum = 0;
-    if (d1 == 2) sum += 2;
-    if (d2 == 2) sum += 2;
-    if (d3 == 2) sum += 2;
-    if (d4 == 2) sum += 2;
-    if (d5 == 2) sum += 2;
-    return sum;
+    return exactNumberStrategy(2, d1, d2, d3, d4, d5);
   }
 
 
   public static int threes(int d1, int d2, int d3, int d4, int d5)
   {
-    int s;
-    s = 0;
-    if (d1 == 3) s += 3;
-    if (d2 == 3) s += 3;
-    if (d3 == 3) s += 3;
-    if (d4 == 3) s += 3;
-    if (d5 == 3) s += 3;
-    return s;
+    return exactNumberStrategy(3, d1, d2, d3, d4, d5);
   }
 
 
@@ -72,35 +65,19 @@ public class Yatzy
 
   public int fours()
   {
-    int sum;
-    sum = 0;
-    for (int at = 0; at != 5; at++) {
-      if (dice[at] == 4) {
-        sum += 4;
-      }
-    }
-    return sum;
+    return exactNumberStrategy(4, dice);
   }
 
 
   public int fives()
   {
-    int s = 0;
-    int i;
-    for (i = 0; i < dice.length; i++)
-      if (dice[i] == 5)
-        s = s + 5;
-    return s;
+    return exactNumberStrategy(5, dice);
   }
 
 
   public int sixes()
   {
-    int sum = 0;
-    for (int at = 0; at < dice.length; at++)
-      if (dice[at] == 6)
-        sum = sum + 6;
-    return sum;
+    return exactNumberStrategy(6, dice);
   }
 
 
