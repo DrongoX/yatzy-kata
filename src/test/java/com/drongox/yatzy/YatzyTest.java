@@ -130,8 +130,12 @@ public class YatzyTest
   @Test
   public void should_return_12_when_strategy_pair_and_roll_5_3_6_6_5()
   {
+    //given
+    Roll roll = new Roll(5, 3, 6, 6, 5);
     int expected = 12;
-    int actual = Yatzy.score_pair(5, 3, 6, 6, 5);
+    //when
+    int actual = yatzy.score(PAIR, roll);
+    //then
     assertEquals(expected, actual);
   }
 
@@ -139,8 +143,12 @@ public class YatzyTest
   @Test
   public void should_return_0_when_strategy_pair_and_roll_1_2_3_6_5()
   {
+    //given
+    Roll roll = new Roll(1, 2, 3, 6, 5);
     int expected = 0;
-    int actual = Yatzy.score_pair(1, 2, 3, 6, 5);
+    //when
+    int actual = yatzy.score(PAIR, roll);
+    //then
     assertEquals(expected, actual);
   }
 

@@ -1,6 +1,13 @@
 package com.drongox.yatzy;
 
+import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.IntStream;
+
+import static java.util.Map.Entry.comparingByKey;
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
 
 public enum YatzyStrategy
 {
@@ -18,7 +25,9 @@ public enum YatzyStrategy
 
   FIVES(roll -> exactNumberStrategy(5, roll)),
 
-  SIXES(roll -> exactNumberStrategy(6, roll));
+  SIXES(roll -> exactNumberStrategy(6, roll)),
+
+  PAIR(roll -> scoreSomeOfAKindStrategy(2, roll));
 
 
   private final Function<Roll, Integer> scoreCalculator;
@@ -41,5 +50,25 @@ public enum YatzyStrategy
     return roll.stream()
                .filter(die -> die == matchingNumber)
                .sum();
+  }
+
+
+  private static Map<Integer, Long> countDice(Roll roll)
+  {
+    return roll.stream()
+               .boxed()
+               .collect(groupingBy(identity(), counting()));
+  }
+
+
+  private static Integer scoreSomeOfAKindStrategy(int matchingCount, Roll roll)
+  {
+    return countDice(roll).entrySet()
+                          .stream()
+                          .filter(entry -> entry.getValue() >= matchingCount)
+                          .max(comparingByKey())
+                          .map(Map.Entry::getKey)
+                          .map(die -> die * matchingCount)
+                          .orElse(0);
   }
 }
