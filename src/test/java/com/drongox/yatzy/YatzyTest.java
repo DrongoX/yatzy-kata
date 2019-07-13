@@ -2,15 +2,22 @@ package com.drongox.yatzy;
 
 import org.junit.*;
 
+import static com.drongox.yatzy.YatzyStrategy.CHANCE;
 import static org.junit.Assert.*;
 
 public class YatzyTest
 {
   @Test
-  public void should_return_15_when_strategy_chance_and_dice_2_3_4_5_1()
+  public void should_return_15_when_strategy_chance_and_roll_2_3_4_5_1()
   {
+    //given
+    Yatzy yatzy = new Yatzy();
+    YatzyStrategy yatzyStrategy = CHANCE;
+    Roll roll = new Roll(2, 3, 4, 5, 1);
     int expected = 15;
-    int actual = Yatzy.chance(2, 3, 4, 5, 1);
+    //when
+    int actual = yatzy.score(yatzyStrategy, roll);
+    //then
     assertEquals(expected, actual);
   }
 
