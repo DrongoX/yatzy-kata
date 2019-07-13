@@ -6,124 +6,218 @@ import static org.junit.Assert.*;
 
 public class YatzyTest
 {
-
   @Test
-  public void chance_scores_sum_of_all_dice()
+  public void should_return_15_when_strategy_chance_and_dice_2_3_4_5_1()
   {
     int expected = 15;
     int actual = Yatzy.chance(2, 3, 4, 5, 1);
     assertEquals(expected, actual);
-    assertEquals(16, Yatzy.chance(3, 3, 4, 5, 1));
   }
 
+
   @Test
-  public void yatzy_scores_50()
+  public void should_return_50_when_strategy_yatzy_and_dice_4_4_4_4_4()
   {
     int expected = 50;
     int actual = Yatzy.yatzy(4, 4, 4, 4, 4);
     assertEquals(expected, actual);
-    assertEquals(50, Yatzy.yatzy(6, 6, 6, 6, 6));
-    assertEquals(0, Yatzy.yatzy(6, 6, 6, 6, 3));
   }
 
-  @Test
-  public void test_1s()
-  {
-    assertTrue(Yatzy.ones(1, 2, 3, 4, 5) == 1);
-    assertEquals(2, Yatzy.ones(1, 2, 1, 4, 5));
-    assertEquals(0, Yatzy.ones(6, 2, 2, 4, 5));
-    assertEquals(4, Yatzy.ones(1, 2, 1, 1, 1));
-  }
 
   @Test
-  public void test_2s()
+  public void should_return_0_when_strategy_yatzy_and_dice_4_4_4_4_1()
   {
-    assertEquals(4, Yatzy.twos(1, 2, 3, 2, 6));
-    assertEquals(10, Yatzy.twos(2, 2, 2, 2, 2));
+    int expected = 0;
+    int actual = Yatzy.yatzy(4, 4, 4, 4, 1);
+    assertEquals(expected, actual);
   }
 
-  @Test
-  public void test_threes()
-  {
-    assertEquals(6, Yatzy.threes(1, 2, 3, 2, 3));
-    assertEquals(12, Yatzy.threes(2, 3, 3, 3, 3));
-  }
 
   @Test
-  public void fours_test()
+  public void should_return_2_when_strategy_ones_and_dice_1_2_1_4_5()
   {
-    assertEquals(12, new Yatzy(4, 4, 4, 5, 5).fours());
-    assertEquals(8, new Yatzy(4, 4, 5, 5, 5).fours());
-    assertEquals(4, new Yatzy(4, 5, 5, 5, 5).fours());
+    int expected = 2;
+    int actual = Yatzy.ones(1, 2, 1, 4, 5);
+    assertEquals(expected, actual);
   }
 
-  @Test
-  public void fives()
-  {
-    assertEquals(10, new Yatzy(4, 4, 4, 5, 5).fives());
-    assertEquals(15, new Yatzy(4, 4, 5, 5, 5).fives());
-    assertEquals(20, new Yatzy(4, 5, 5, 5, 5).fives());
-  }
 
   @Test
-  public void sixes_test()
+  public void should_return_4_when_strategy_twos_and_dice_1_2_3_2_6()
   {
-    assertEquals(0, new Yatzy(4, 4, 4, 5, 5).sixes());
-    assertEquals(6, new Yatzy(4, 4, 6, 5, 5).sixes());
-    assertEquals(18, new Yatzy(6, 5, 6, 6, 5).sixes());
+    int expected = 4;
+    int actual = Yatzy.twos(1, 2, 3, 2, 6);
+    assertEquals(expected, actual);
   }
 
-  @Test
-  public void one_pair()
-  {
-    assertEquals(6, Yatzy.score_pair(3, 4, 3, 5, 6));
-    assertEquals(10, Yatzy.score_pair(5, 3, 3, 3, 5));
-    assertEquals(12, Yatzy.score_pair(5, 3, 6, 6, 5));
-  }
 
   @Test
-  public void two_Pair()
+  public void should_return_6_when_strategy_threes_and_dice_1_2_3_2_3()
   {
-    assertEquals(16, Yatzy.two_pair(3, 3, 5, 4, 5));
-    assertEquals(16, Yatzy.two_pair(3, 3, 5, 5, 5));
+    int expected = 6;
+    int actual = Yatzy.threes(1, 2, 3, 2, 3);
+    assertEquals(expected, actual);
   }
 
-  @Test
-  public void three_of_a_kind()
-  {
-    assertEquals(9, Yatzy.three_of_a_kind(3, 3, 3, 4, 5));
-    assertEquals(15, Yatzy.three_of_a_kind(5, 3, 5, 4, 5));
-    assertEquals(9, Yatzy.three_of_a_kind(3, 3, 3, 3, 5));
-  }
 
   @Test
-  public void four_of_a_knd()
+  public void should_return_8_when_strategy_fours_and_dice_4_4_5_5_5()
   {
-    assertEquals(12, Yatzy.four_of_a_kind(3, 3, 3, 3, 5));
-    assertEquals(20, Yatzy.four_of_a_kind(5, 5, 5, 4, 5));
-    assertEquals(9, Yatzy.three_of_a_kind(3, 3, 3, 3, 3));
+    int expected = 8;
+    Yatzy yatzy = new Yatzy(4, 4, 5, 5, 5);
+
+    int actual = yatzy.fours();
+
+    assertEquals(expected, actual);
   }
 
-  @Test
-  public void smallStraight()
-  {
-    assertEquals(15, Yatzy.smallStraight(1, 2, 3, 4, 5));
-    assertEquals(15, Yatzy.smallStraight(2, 3, 4, 5, 1));
-    assertEquals(0, Yatzy.smallStraight(1, 2, 2, 4, 5));
-  }
 
   @Test
-  public void largeStraight()
+  public void should_return_15_when_strategy_fives_and_dice_4_4_5_5_5()
   {
-    assertEquals(20, Yatzy.largeStraight(6, 2, 3, 4, 5));
-    assertEquals(20, Yatzy.largeStraight(2, 3, 4, 5, 6));
-    assertEquals(0, Yatzy.largeStraight(1, 2, 2, 4, 5));
+    int expected = 15;
+    Yatzy yatzy = new Yatzy(4, 4, 5, 5, 5);
+
+    int actual = yatzy.fives();
+
+    assertEquals(expected, actual);
   }
 
+
   @Test
-  public void fullHouse()
+  public void should_return_18_when_strategy_sixes_and_dice_6_5_6_6_5()
   {
-    assertEquals(18, Yatzy.fullHouse(6, 2, 2, 2, 6));
-    assertEquals(0, Yatzy.fullHouse(2, 3, 4, 5, 6));
+    int expected = 18;
+    Yatzy yatzy = new Yatzy(6, 5, 6, 6, 5);
+
+    int actual = yatzy.sixes();
+
+    assertEquals(expected, actual);
+  }
+
+
+  @Test
+  public void should_return_12_when_strategy_pair_and_dice_5_3_6_6_5()
+  {
+    int expected = 12;
+    int actual = Yatzy.score_pair(5, 3, 6, 6, 5);
+    assertEquals(expected, actual);
+  }
+
+
+  @Test
+  public void should_return_0_when_strategy_pair_and_dice_1_2_3_6_5()
+  {
+    int expected = 0;
+    int actual = Yatzy.score_pair(1, 2, 3, 6, 5);
+    assertEquals(expected, actual);
+  }
+
+
+  @Test
+  public void should_return_16_when_strategy_two_pairs_and_dice_3_3_5_5_5()
+  {
+    int expected = 16;
+    int actual = Yatzy.two_pair(3, 3, 5, 5, 5);
+    assertEquals(expected, actual);
+  }
+
+
+  @Test
+  public void should_return_0_when_strategy_two_pairs_and_dice_3_3_4_5_6()
+  {
+    int expected = 0;
+    int actual = Yatzy.two_pair(3, 3, 4, 5, 6);
+    assertEquals(expected, actual);
+  }
+
+
+  @Test
+  public void should_return_9_when_strategy_three_of_a_kind_and_dice_3_3_3_3_5()
+  {
+    int expected = 9;
+    int actual = Yatzy.three_of_a_kind(3, 3, 3, 3, 5);
+    assertEquals(expected, actual);
+  }
+
+
+  @Test
+  public void should_return_0_when_strategy_three_of_a_kind_and_dice_3_3_4_4_5()
+  {
+    int expected = 0;
+    int actual = Yatzy.three_of_a_kind(3, 3, 4, 4, 5);
+    assertEquals(expected, actual);
+  }
+
+
+  @Test
+  public void should_return_12_when_strategy_four_of_a_kind_and_dice_3_3_3_3_3()
+  {
+    int expected = 12;
+    int actual = Yatzy.four_of_a_kind(3, 3, 3, 3, 3);
+    assertEquals(expected, actual);
+  }
+
+
+  @Test
+  public void should_return_0_when_strategy_four_of_a_kind_and_dice_3_3_3_5_5()
+  {
+    int expected = 0;
+    int actual = Yatzy.four_of_a_kind(3, 3, 3, 5, 5);
+    assertEquals(expected, actual);
+  }
+
+
+  @Test
+  public void should_return_15_when_strategy_small_straight_and_dice_1_2_3_4_5()
+  {
+    int expected = 15;
+    int actual = Yatzy.smallStraight(1, 2, 3, 4, 5);
+    assertEquals(expected, actual);
+  }
+
+
+  @Test
+  public void should_return_0_when_strategy_small_straight_and_dice_5_2_3_4_5()
+  {
+    int expected = 0;
+    int actual = Yatzy.smallStraight(5, 2, 3, 4, 5);
+    assertEquals(expected, actual);
+  }
+
+
+  @Test
+  public void should_return_20_when_strategy_large_straight_and_dice_6_2_3_4_5()
+  {
+    int expected = 20;
+    int actual = Yatzy.largeStraight(6, 2, 3, 4, 5);
+    assertEquals(expected, actual);
+  }
+
+
+  @Test
+  public void should_return_0_when_strategy_large_straight_and_dice_1_2_3_4_5()
+  {
+    int expected = 0;
+    int actual = Yatzy.largeStraight(1, 2, 3, 4, 5);
+    assertEquals(expected, actual);
+  }
+
+
+  @Test
+  public void should_return_18_when_strategy_full_house_and_dice_6_2_2_2_6()
+  {
+    int expected = 18;
+    int actual = Yatzy.fullHouse(6, 2, 2, 2, 6);
+    assertEquals(expected, actual);
+  }
+
+
+  @Test
+  public void should_return_0_when_strategy_full_house_and_dice_6_2_2_2_2()
+  {
+    int expected = 0;
+    int actual = Yatzy.fullHouse(6, 2, 2, 2, 2);
+    assertEquals(expected, actual);
   }
 }
