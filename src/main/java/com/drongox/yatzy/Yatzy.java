@@ -1,7 +1,7 @@
 package com.drongox.yatzy;
 
+import java.util.Arrays;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.IntStream;
 
 import static java.util.Map.Entry.comparingByKey;
@@ -108,14 +108,14 @@ public class Yatzy
 
   public static int smallStraight(int d1, int d2, int d3, int d4, int d5)
   {
-    var smallStraight = Set.of(1, 2, 3, 4, 5);
+    var smallStraight = new int[] {1, 2, 3, 4, 5};
     return exactRollStrategy(smallStraight, d1, d2, d3, d4, d5);
   }
 
 
   public static int largeStraight(int d1, int d2, int d3, int d4, int d5)
   {
-    var largeStraight = Set.of(2, 3, 4, 5, 6);
+    var largeStraight = new int[] {2, 3, 4, 5, 6};
     return exactRollStrategy(largeStraight, d1, d2, d3, d4, d5);
   }
 
@@ -162,14 +162,16 @@ public class Yatzy
   }
 
 
-  private static int exactRollStrategy(Set<Integer> expectedRoll, int... dice)
+  private static int exactRollStrategy(int[] expectedRoll, int... dice)
   {
-    boolean isMatching = IntStream.of(dice)
-                                  .boxed()
-                                  .collect(toSet())
-                                  .equals(expectedRoll);
-    if (isMatching) {
-      return expectedRoll.stream().mapToInt(Integer::intValue).sum();
+    //copying arrays is a bit redundant here, but to be really really safe :)
+    final int[] diceSorted = Arrays.copyOf(dice, dice.length);
+    Arrays.sort(diceSorted);
+    final int[] expectedRollSorted = Arrays.copyOf(expectedRoll, expectedRoll.length);
+    Arrays.sort(expectedRollSorted);
+
+    if (Arrays.equals(expectedRollSorted, diceSorted)) {
+      return IntStream.of(expectedRoll).sum();
     } else {
       return 0;
     }
